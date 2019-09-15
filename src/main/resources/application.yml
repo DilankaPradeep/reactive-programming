@@ -1,0 +1,25 @@
+
+server:
+  port: 8443
+  
+spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: http://localhost:8080/auth/realms/dilankag_reactive_program/protocol/openid-connect/certs
+          issuer-uri: http://localhost:8080/auth/realms/dilankag_reactive_program
+      # client:
+      #   registration:
+      #     spring-boot-api:
+      #       provider: keycloak
+      #       client-id: spring-boot-api
+      #       client-secret: c9b7c384-d1ec-46a6-a22f-2831da09cab7
+      #       scope: openid, profile, email, offline_access
+      #   provider:
+      #     keycloak:
+      #       issuer-uri: http://localhost:8080/auth/realms/dilankag_reactive_program
+      #       authorization-uri: http://localhost:8080/auth/realms/dilankag_reactive_program/protocol/openid-connect/auth
+      #       jwk-set-uri: http://localhost:8080/auth/realms/dilankag_reactive_program/protocol/openid-connect/certs
+      #       token-uri: http://localhost:8080/auth/realms/dilankag_reactive_program/protocol/openid-connect/token
+      #       user-info-uri: http://localhost:8080/auth/realms/dilankag_reactive_program/protocol/openid-connect/userinfo

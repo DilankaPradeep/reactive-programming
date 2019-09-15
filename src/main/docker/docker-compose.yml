@@ -1,0 +1,43 @@
+version: "3"
+volumes:
+  sbw-mongo:
+    driver: local
+  sbw-mysql:
+    driver: local
+services:
+  mongodb:
+    container_name: sbw-mongo
+    image: mongo:4.0.4
+    ports:
+      - "27017:27017"
+    volumes:
+      - sbw-mongo:/data/db
+  mysql:
+    container_name: sbw-mysql
+    image: mysql:5.7.24
+    volumes:
+      - sbw-mysql:/var/lib/mysql
+      - ./keyclock/mycustom.cnf:/etc/mysql/conf.d/custom.cnf
+    ports:
+      - "3307:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: keycloak
+      MYSQL_USER: keycloak
+      MYSQL_PASSWORD: password
+  keyclok:
+    container_name: sbw-keyclok
+    image: "jboss/keycloak:4.8.3.Final"
+    ports:
+      - "8080:8080"
+    environment:
+      DB_VENDOR: MYSQL
+      DB_ADDR: mysql
+      DB_DATABASE: keycloak
+      DB_USER: keycloak
+      DB_PASSWORD: password
+      KEYCLOAK_USER: admin
+      KEYCLOAK_PASSWORD: admin
+      JDBC_PARAMS: "characterEncoding=UTF-8&createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true"
+    depends_on:
+      - mysql
